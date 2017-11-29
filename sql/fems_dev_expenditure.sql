@@ -30,7 +30,7 @@ CREATE TABLE `expenditure` (
   `expenditureName` varchar(255) NOT NULL COMMENT '支出人',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`expenditureID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='支出数据表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='支出数据表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +39,7 @@ CREATE TABLE `expenditure` (
 
 LOCK TABLES `expenditure` WRITE;
 /*!40000 ALTER TABLE `expenditure` DISABLE KEYS */;
+INSERT INTO `expenditure` VALUES (1,'买菜',25.00,'2017-11-29 14:48:54','xtz','买肉');
 /*!40000 ALTER TABLE `expenditure` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-28 17:33:16
+-- Dump completed on 2017-11-29 17:21:20

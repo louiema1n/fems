@@ -10,4 +10,14 @@ public class IndexController {
     public String index() {
         return "index";
     }
+
+    @RequestMapping("/main")
+    public String main() {
+        return "main";
+    }
+
+    @RequestMapping("/inList")
+    public String inList() {
+        return "income/incomeList";
+    }
 }

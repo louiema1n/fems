@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/header :: head"></div>
+    <div th:replace="common/header :: aceadmin"></div>
+    <div th:replace="common/header :: acescripts"></div>
+    <div th:replace="common/header :: bootstraptable"></div>
+    <div th:replace="common/header :: jqueryui"></div>
+
+    <!-- myjs -->
+    <script th:src="@{/custom/js/myjs.js}"></script>
+
+</head>
+<body>
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">财务管理</a>
+                <small>
+                    <i class="ace-icon fa fa-angle-double-right"></i>
+                </small>
+                <a href="inList">收入列表</a>
+            </li>
+        </ul><!-- /.breadcrumb -->
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="header smaller lighter green">收入列表</h3>
+                        <table id="incomeTable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- 工具栏 -->
+<div id="toolbar">
+    <!--<div class="btn-group">-->
+    <button type="button" class="btn btn-success" id="add">
+        <i class="fa fa-plus">新增</i>
+    </button>
+
+    <!--</div>-->
+</div>
+
+<!-- 提示框 -->
+<div id="dialog-confirm" class="hide">
+    <div class="alert alert-info bigger-110">
+        These items will be permanently deleted and cannot be recovered.
+    </div>
+
+    <div class="space-6"></div>
+
+    <p class="bigger-110 bolder center grey">
+        <i class="ace-icon fa fa-hand-o-right blue bigger-120"></i>
+        Are you sure?
+    </p>
+</div><!-- #dialog-confirm -->
+
+
+<script type="text/javascript">
+    $(function () {
+//        表格数据初始化
+        $('#incomeTable').bootstrapTable({
+            url: '/in/all',
+            method: 'get',
+            columns: [{
+                field: 'state',
+                checkbox: true,
+            }, {
+                field: 'number',
+                title: '序号',
+                formatter:function (value, row, index) {
+                    return index + 1;
+                },
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'category',
+                title: '类别'
+            }, {
+                field: 'money',
+                title: '金额',
+                formatter:function (value, row, index) {
+                    // 保留2位小数
+                    return value.toFixed(2);
+                },
+            }, {
+                field: 'incomeTime',
+                title: '时间',
+                formatter: function (value, row, index) {
+                    return timeStamp2String(value);
+                },
+            }, {
+                field: 'incomeName',
+                title: '收入人'
+            }, {
+                field: 'remark',
+                title: '备注'
+            },{
+                field: 'opr',
+                title: '操作',
+                align: 'center',
+                formatter: oprFunction,
+            }],
+            striped: true,  // 隔行变色
+            pagination: true,   // 显示分页条
+            search: true,
+            showColumns: false,
+            showRefresh: true,
+            showToggle: true,
+            showPaginationSwitch: true,
+            clickToSelect: true,
+            toolbar: "#toolbar",
+        });
+    });
+
+    // 操作
+    function oprFunction(value, row, index) {
+        return '<div class="hidden-sm hidden-xs action-buttons">'+
+            '<a class="green" href="#" onclick="foo(\''+ row.incomeID +'\')"><i class="ace-icon fa fa-pencil bigger-130"></i></a>' +
+            '<a class="red" href="#" onclick="foo(\''+ row.incomeID +'\')"><i class="ace-icon fa fa-trash-o bigger-130"></i></a>' +
+            '</div>';
+    }
+
+    function foo(id) {
+        alert(id);
+    }
+
+    // 弹出提示框
+    $( "#add" ).on('click', function(e) {
+        e.preventDefault();
+
+        $( "#dialog-confirm" ).removeClass('hide').dialog({
+            resizable: false,
+            width: '320',
+            modal: true,
+            title: "Empty the recycle bin",
+            title_html: true,
+            buttons: [
+                {
+                    html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; Delete all items",
+                    "class" : "btn btn-danger btn-minier",
+                    click: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+                ,
+                {
+                    html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; Cancel",
+                    "class" : "btn btn-minier",
+                    click: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            ]
+        });
+    });
+
+
+</script>
+
+</html>
