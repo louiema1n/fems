@@ -2,8 +2,13 @@ server:
   port: 80
 # 数据源
 spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/fems_dev?useSSL=true
+# thymeleaf
+  thymeleaf:
+    cache: false
+    encoding: utf-8
+    prefix: classpath:/templates/
+    mode: HTML
+    content-type: text/html
+#  激活模式
+  profiles:
+    active: prd
