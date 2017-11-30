@@ -12,5 +12,10 @@ function timeStamp2String (time){
     var minute = datetime.getMinutes();
     var second = datetime.getSeconds();
     var mseconds = datetime.getMilliseconds();
-    return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;
+    return year + "-" + addZero(month) + "-" + addZero(date)+" "+ addZero(hour)+":"+addZero(minute)+":"+addZero(second);
 };
+
+//创建补0函数
+function addZero(s) {
+    return s < 10 ? '0' + s : s;
+}
