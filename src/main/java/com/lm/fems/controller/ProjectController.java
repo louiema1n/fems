@@ -3,10 +3,7 @@ package com.lm.fems.controller;
 import com.lm.fems.domain.Project;
 import com.lm.fems.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -56,6 +53,11 @@ public class ProjectController {
     @RequestMapping(value = "/{strtime}", method = RequestMethod.GET)
     public List<Project> getByStrtime(@PathVariable Timestamp strtime) {
         return this.projectService.getByStrtime(strtime);
+    }
+
+    @RequestMapping(value = "/cpt", method = RequestMethod.POST)
+    public void updById(Project project) {
+        this.projectService.updById(project);
     }
 
 }

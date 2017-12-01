@@ -4,6 +4,7 @@ import com.lm.fems.domain.Project;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.UpdateProvider;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -22,8 +23,11 @@ public interface ProjectMapper {
     @Delete("delete from project where prjid = #{prjid}")
     Integer delById(int prjid);
 
-    @Select("select * from project where strtime = #{strtime}")
+    @Select("select * from project where endtime is null and strtime <= #{strtime}")
     List<Project> selectByStrtime(Timestamp strtime);
+
+    @UpdateProvider(type = ProjectDaoProvider.class, method = "updById")
+    Integer upd(Project project);
 
     class ProjectDaoProvider {
         public String insertOneProject(Project project) {
@@ -41,6 +45,48 @@ public interface ProjectMapper {
                     + project.getState() + "', '"
                     + project.getRemark() + "')";
             return sql;
+        }
+
+        public String updById(Project project) {
+            String sql = "update project set ";
+            if (project.getEndtime() != null) {
+                sql += "endtime = '" + project.getEndtime() + "', ";
+            }
+            if (project.getEtoc() != null) {
+                sql += "etoc = '" + project.getEtoc() + "', ";
+            }
+            if (project.getStrtime() != null) {
+                sql += "strtime = '" + project.getStrtime() + "', ";
+            }
+            if (project.getReviewer() != null) {
+                sql += "reviewer = '" + project.getReviewer() + "', ";
+            }
+            if (project.getAssistant() != null) {
+                sql += "assistant = '" + project.getAssistant() + "', ";
+            }
+            if (project.getLeader() != null) {
+                sql += "leader = '" + project.getLeader() + "', ";
+            }
+            if (project.getRequirement() != null) {
+                sql += "requirement = '" + project.getRequirement() + "', ";
+            }
+            if (project.getMainwork() != null) {
+                sql += "mainwork = '" + project.getMainwork() + "', ";
+            }
+            if (project.getPhase() != null) {
+                sql += "phase = '" + project.getPhase() + "', ";
+            }
+            if (project.getPrjname() != null) {
+                sql += "prjname = '" + project.getPrjname() + "', ";
+            }
+            if (project.getRemark() != null) {
+                sql += "remark = '" + project.getRemark() + "', ";
+            }
+            if (project.getState() != 0) {
+                sql += "state = '" + project.getState() + "', ";
+            }
+            sql = sql.substring(0, sql.lastIndexOf(", "));
+            return sql + " where prjid = " + project.getPrjid();
         }
     }
 

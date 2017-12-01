@@ -51,4 +51,13 @@ public class ProjectService {
         return this.projectMapper.selectByStrtime(strtime);
     }
 
+    /**
+     * 更新project
+     * @param project
+     * @return
+     */
+    public Integer updById(Project project) {
+        return this.projectMapper.upd(project);
+    }
+
 }

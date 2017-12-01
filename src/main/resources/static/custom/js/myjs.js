@@ -3,6 +3,9 @@
  */
 // timestamp转换成datetime
 function timeStamp2String (time){
+    if (time == null) {
+        return null;
+    }
     var datetime = new Date();
     datetime.setTime(time);
     var year = datetime.getFullYear();

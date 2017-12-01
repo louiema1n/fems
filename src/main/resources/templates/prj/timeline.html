@@ -4,6 +4,7 @@
     <div th:replace="common/header :: head"></div>
     <div th:replace="common/header :: aceadmin"></div>
     <div th:replace="common/header :: acescripts"></div>
+    <div th:replace="common/header :: jqueryui"></div>
 
     <!-- myjs -->
     <script th:src="@{/custom/js/myjs.js}"></script>
@@ -37,157 +38,12 @@
                     <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                         <div class="timeline-container">
                             <div class="timeline-label">
-                                        <span class="label label-primary arrowed-in-right label-lg">
-                                            <b>今天</b>
-                                        </span>
+                                <span class="label label-primary arrowed-in-right label-lg">
+                                    <b id="today">今天</b>
+                                </span>
                             </div>
+                            <div class="timeline-items" id="content">
 
-                            <div class="timeline-items">
-                                <div class="timeline-item clearfix">
-                                    <div class="timeline-info">
-                                        <i class="timeline-indicator ace-icon fa fa-leaf btn btn-primary no-hover green"></i>
-                                    </div>
-
-                                    <div class="widget-box transparent">
-                                        <div class="widget-header widget-header-small">
-                                            <h5 class="widget-title smaller">
-                                                <span class="blue" id="prjname">项目名</span>
-                                                <small>
-                                                    <i class="ace-icon fa fa-angle-double-right"></i>
-                                                </small>
-                                                <span class="grey" id="phase">阶段</span>
-                                                <small>
-                                                    <i class="ace-icon fa fa-angle-double-right"></i>
-                                                </small>
-                                                <span class="grey" id="mainwork">主要工作</span>
-                                            </h5>
-
-                                            <span class="widget-toolbar">
-																	<a href="#" data-action="collapse">
-																		<i class="ace-icon fa fa-chevron-up"></i>
-																	</a>
-																</span>
-                                        </div>
-
-                                        <div class="widget-body">
-                                            <div class="widget-main">
-                                                <span class="bigger-120" id="requirement">要求</span>
-                                                <div class="pull-right action-buttons">
-                                                    <a href="#">
-                                                        <i class="timeline-indicator ace-icon fa fa-check btn btn-primary" style="cursor: pointer"></i>
-                                                    </a>
-                                                </div>
-
-                                                <div class="space-6"></div>
-
-                                                <div class="widget-toolbox clearfix">
-                                                    <div class="pull-left">
-                                                        <i class="ace-icon fa fa-user red bigger-30" id="leader">负责人</i>&nbsp;&nbsp;
-                                                        <i class="ace-icon fa fa-user-plus pink bigger-20" id="assistant">协助人</i>&nbsp;&nbsp;
-                                                        <i class="ace-icon fa fa-users green bigger-20" id="reviewer">审核人</i>
-
-                                                    </div>
-
-                                                    <div class="pull-right action-buttons">
-                                                        <i class="ace-icon fa fa-clock-o grey bigger-20" id="etoc">预计完成时间</i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- /.timeline-items -->
-                        </div><!-- /.timeline-container -->
-
-                        <div class="timeline-container">
-                            <div class="timeline-label">
-                                        <span class="label label-success arrowed-in-right label-lg">
-                                            <b>昨天</b>
-                                        </span>
-                            </div>
-
-                            <div class="timeline-items">
-                                <div class="timeline-item clearfix">
-                                    <div class="timeline-info">
-                                        <i class="timeline-indicator ace-icon fa fa-beer btn btn-inverse no-hover"></i>
-                                    </div>
-
-                                    <div class="widget-box transparent">
-                                        <div class="widget-header widget-header-small">
-                                            <h5 class="widget-title smaller">Haloween party</h5>
-
-                                            <span class="widget-toolbar">
-																	<i class="ace-icon fa fa-clock-o bigger-110"></i>
-																	1 hour ago
-																</span>
-                                        </div>
-
-                                        <div class="widget-body">
-                                            <div class="widget-main">
-                                                <div class="clearfix">
-                                                    <div class="pull-left">
-                                                        Lots of fun at Haloween party.
-                                                        <br/>
-                                                        Take a look at some pics:
-                                                    </div>
-
-                                                    <div class="pull-right">
-                                                        <i class="ace-icon fa fa-chevron-left blue bigger-110"></i>
-
-
-                                                        &nbsp;
-                                                        <i class="ace-icon fa fa-chevron-right blue bigger-110"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- /.timeline-items -->
-                        </div><!-- /.timeline-container -->
-
-                        <div class="timeline-container">
-                            <div class="timeline-label">
-                                        <span class="label label-grey arrowed-in-right label-lg">
-                                            <b>前天</b>
-                                        </span>
-                            </div>
-
-                            <div class="timeline-items">
-                                <div class="timeline-item clearfix">
-                                    <div class="timeline-info">
-                                        <i class="timeline-indicator ace-icon fa fa-leaf btn btn-primary no-hover green"></i>
-                                    </div>
-
-                                    <div class="widget-box transparent">
-                                        <div class="widget-header widget-header-small">
-                                            <h5 class="widget-title smaller">Lorum Ipsum</h5>
-
-                                            <span class="widget-toolbar no-border">
-																	<i class="ace-icon fa fa-clock-o bigger-110"></i>
-																	10:22
-																</span>
-
-                                            <span class="widget-toolbar">
-																	<a href="#" data-action="reload">
-																		<i class="ace-icon fa fa-refresh"></i>
-																	</a>
-
-																	<a href="#" data-action="collapse">
-																		<i class="ace-icon fa fa-chevron-up"></i>
-																	</a>
-																</span>
-                                        </div>
-
-                                        <div class="widget-body">
-                                            <div class="widget-main">
-                                                Anim pariatur cliche reprehenderit, enim eiusmod
-                                                <span class="blue bolder">high life</span>
-                                                accusamus terry richardson ad squid &hellip;
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div><!-- /.timeline-items -->
                         </div><!-- /.timeline-container -->
                     </div>
@@ -197,30 +53,144 @@
     </div>
 </div>
 
+<!-- 完成项目提示框 -->
+<div id="confirm" class="hide">
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form-horizontal" role="form">
+                <!-- 备注 -->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-3">备注</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" id="form-field-3" placeholder="请输入备注" name="remark"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div><!-- #dialog-confirm -->
+
 <script type="text/javascript">
     $(function () {
+        // 获取当前时间戳
+        var currentTs = Date.parse(new Date());
+        $("#today").text("今天 " + timeStamp2String(currentTs));
         $.ajax({
             cache: true,
             type: "GET",
-            url:'/prj/2017-12-01 00:00:00',
+            url:'/prj/' + timeStamp2String(currentTs) + ' 00:00:00',
             async: false,
             error: function(request) {
                 alert("服务器错误，请稍后重试。");
             },
             success: function(data) {
+                // data为空
+                if (data.length == 0) {
+                    $("#content").append("<h3 class=\"header smaller lighter\" style=\"text-align: center\">恭喜你！今日无事项。</h3>");
+                }
                 for (var i = 0; i < data.length; i++) {
-                    $("#prjname").text(data[i].prjname);
-                    $("#assistant").text(" " + data[i].assistant);
-                    $("#etoc").text(" " + timeStamp2String(data[i].etoc));
-                    $("#leader").text(" " + data[i].leader);
-                    $("#mainwork").text(data[i].mainwork);
-                    $("#phase").text(data[i].phase);
-                    $("#requirement").text(data[i].requirement);
-                    $("#reviewer").text(" " + data[i].reviewer);
+                    var state = null, logo = null;
+                    if (timeStamp2String(currentTs) == timeStamp2String(data[i].strtime)) {
+                        state = "<span class=\"badge badge-danger\">今天开始</span>";
+                        logo = "<i class=\"timeline-indicator ace-icon fa fa-leaf btn btn-danger no-hover\"></i>";
+                    } else {
+                        state = "<span class=\"badge badge-success\">项目进行中</span>";
+                        logo = "<i class=\"timeline-indicator ace-icon fa fa-leaf btn btn-success no-hover\"></i>";
+                    }
+                    $("#content").append(
+                        '<div class="timeline-item clearfix">' +
+                        '<div class="timeline-info">' +
+                        logo +
+                        '</div>' +
+                        '<div class="widget-box transparent">' +
+                        '<div class="widget-header widget-header-small">' +
+                        '<h5 class="widget-title smaller">' +
+                        '<span class="blue">' + data[i].prjname + '</span>' +
+                        '<small><i class="ace-icon fa fa-angle-double-right"></i></small>' +
+                        '<span class="pink">' + data[i].phase + '</span>' +
+                        '<small><i class="ace-icon fa fa-angle-double-right"></i></small>' +
+                        '<span class="grey">' + data[i].mainwork + '</span>' +
+                        '</h5>' +
+                        '<span class="widget-toolbar"><a href="#" data-action="collapse"><i class="ace-icon fa fa-chevron-up"></i></a></span>' +
+                        '</div>' +
+                        '<div class="widget-body">' +
+                        '<div class="widget-main">' +
+                        '<span class="bigger-120" id="requirement">' + data[i].requirement + '</span>' +
+                        '<div class="pull-right action-buttons">' +
+                        state +
+                        '<a href="javascript:void(0);" title="确认完成项目" onclick="cfm('+data[i].prjid+')">' +
+                        '<i class="timeline-indicator ace-icon fa fa-check btn btn-primary" style="cursor: pointer"></i>' +
+                        '</a>' +
+                        '</div>' +
+                        '<div class="space-6"></div>' +
+                        '<div class="widget-toolbox clearfix">' +
+                        '<div class="pull-left">' +
+                        '<i class="ace-icon fa fa-user red bigger-30" >&nbsp;' + data[i].leader + '</i>&nbsp;&nbsp;' +
+                        '<i class="ace-icon fa fa-users pink bigger-20">&nbsp;' + data[i].assistant + '</i>&nbsp;&nbsp;' +
+                        '<i class="ace-icon fa fa-street-view green bigger-20" >&nbsp;' + data[i].reviewer + '</i>' +
+                        '</div>' +
+                        '<div class="pull-right action-buttons">' +
+                        '<i class="ace-icon fa fa-clock-o grey bigger-20" >&nbsp;' + timeStamp2String(data[i].strtime) + " 至 " + timeStamp2String(data[i].etoc) + '</i>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>'
+                    );
                 }
             }
         });
-    })
+    });
+
+    // 确认完成项目提示框
+    function cfm(prjid) {
+
+        $( "#confirm" ).removeClass('hide').dialog({
+            resizable: false,
+            width: '40%',
+            modal: true,
+            title: "确认完成项目",
+            title_html: true,
+            buttons: [
+                {
+                    html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; 确定",
+                    "class" : "btn btn-success btn-minier",
+                    click: function() {
+//                        提交表单数据
+                        $.ajax({
+                            cache: true,
+                            type: "POST",
+                            url:'/prj/cpt',
+                            data:{
+                                'prjid': prjid,
+                                'endtime': timeStamp2String(Date.parse(new Date())) + " 00:00:00",
+                                'remark': $("textarea[name = 'remark']").val(),
+                            },
+                            async: false,
+                            error: function(request) {
+                                alert("服务器错误，请稍后重试。");
+                            },
+                            success: function(data) {
+                                alert("确认成功");
+                                window.location.href = "/timeline";
+                            }
+                        });
+                    }
+                }
+                ,
+                {
+                    html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
+                    "class" : "btn btn-minier",
+                    click: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            ]
+        });
+    };
+
+
 </script>
 
 </body>
