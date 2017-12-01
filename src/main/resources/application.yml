@@ -11,4 +11,4 @@ spring:
     content-type: text/html
 #  激活模式
   profiles:
-    active: prd
+    active: dev

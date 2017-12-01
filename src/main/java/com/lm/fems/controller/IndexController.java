@@ -24,8 +24,18 @@ public class IndexController {
     }
 
     @RequestMapping("/ecoList")
-    public String inList() {
+    public String ecoList() {
         return "eco/ecoList";
+    }
+
+    @RequestMapping("/prjList")
+    public String prjList() {
+        return "prj/prjList";
+    }
+
+    @RequestMapping("/timeline")
+    public String timeline() {
+        return "prj/timeline";
     }
 
     @RequestMapping("/test")

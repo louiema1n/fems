@@ -12,7 +12,8 @@ function timeStamp2String (time){
     var minute = datetime.getMinutes();
     var second = datetime.getSeconds();
     var mseconds = datetime.getMilliseconds();
-    return year + "-" + addZero(month) + "-" + addZero(date)+" "+ addZero(hour)+":"+addZero(minute)+":"+addZero(second);
+    // return year + "-" + addZero(month) + "-" + addZero(date)+" "+ addZero(hour)+":"+addZero(minute)+":"+addZero(second);
+    return year + "-" + addZero(month) + "-" + addZero(date);
 };
 
 //创建补0函数

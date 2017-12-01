@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/header :: head"></div>
+    <div th:replace="common/header :: aceadmin"></div>
+    <div th:replace="common/header :: acescripts"></div>
+
+    <!-- myjs -->
+    <script th:src="@{/custom/js/myjs.js}"></script>
+</head>
+<body>
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">项目管理</a>
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+            </small>
+            <a href="inList">项目时间线</a>
+        </li>
+    </ul><!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="header smaller lighter green">项目时间线</h3>
+                </div>
+            </div>
+            <div class="row">
+                <!-- content -->
+                <div id="timeline-1">
+                    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                        <div class="timeline-container">
+                            <div class="timeline-label">
+                                        <span class="label label-primary arrowed-in-right label-lg">
+                                            <b>今天</b>
+                                        </span>
+                            </div>
+
+                            <div class="timeline-items">
+                                <div class="timeline-item clearfix">
+                                    <div class="timeline-info">
+                                        <i class="timeline-indicator ace-icon fa fa-leaf btn btn-primary no-hover green"></i>
+                                    </div>
+
+                                    <div class="widget-box transparent">
+                                        <div class="widget-header widget-header-small">
+                                            <h5 class="widget-title smaller">
+                                                <span class="blue" id="prjname">项目名</span>
+                                                <small>
+                                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                                </small>
+                                                <span class="grey" id="phase">阶段</span>
+                                                <small>
+                                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                                </small>
+                                                <span class="grey" id="mainwork">主要工作</span>
+                                            </h5>
+
+                                            <span class="widget-toolbar">
+																	<a href="#" data-action="collapse">
+																		<i class="ace-icon fa fa-chevron-up"></i>
+																	</a>
+																</span>
+                                        </div>
+
+                                        <div class="widget-body">
+                                            <div class="widget-main">
+                                                <span class="bigger-120" id="requirement">要求</span>
+                                                <div class="pull-right action-buttons">
+                                                    <a href="#">
+                                                        <i class="timeline-indicator ace-icon fa fa-check btn btn-primary" style="cursor: pointer"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="space-6"></div>
+
+                                                <div class="widget-toolbox clearfix">
+                                                    <div class="pull-left">
+                                                        <i class="ace-icon fa fa-user red bigger-30" id="leader">负责人</i>&nbsp;&nbsp;
+                                                        <i class="ace-icon fa fa-user-plus pink bigger-20" id="assistant">协助人</i>&nbsp;&nbsp;
+                                                        <i class="ace-icon fa fa-users green bigger-20" id="reviewer">审核人</i>
+
+                                                    </div>
+
+                                                    <div class="pull-right action-buttons">
+                                                        <i class="ace-icon fa fa-clock-o grey bigger-20" id="etoc">预计完成时间</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- /.timeline-items -->
+                        </div><!-- /.timeline-container -->
+
+                        <div class="timeline-container">
+                            <div class="timeline-label">
+                                        <span class="label label-success arrowed-in-right label-lg">
+                                            <b>昨天</b>
+                                        </span>
+                            </div>
+
+                            <div class="timeline-items">
+                                <div class="timeline-item clearfix">
+                                    <div class="timeline-info">
+                                        <i class="timeline-indicator ace-icon fa fa-beer btn btn-inverse no-hover"></i>
+                                    </div>
+
+                                    <div class="widget-box transparent">
+                                        <div class="widget-header widget-header-small">
+                                            <h5 class="widget-title smaller">Haloween party</h5>
+
+                                            <span class="widget-toolbar">
+																	<i class="ace-icon fa fa-clock-o bigger-110"></i>
+																	1 hour ago
+																</span>
+                                        </div>
+
+                                        <div class="widget-body">
+                                            <div class="widget-main">
+                                                <div class="clearfix">
+                                                    <div class="pull-left">
+                                                        Lots of fun at Haloween party.
+                                                        <br/>
+                                                        Take a look at some pics:
+                                                    </div>
+
+                                                    <div class="pull-right">
+                                                        <i class="ace-icon fa fa-chevron-left blue bigger-110"></i>
+
+
+                                                        &nbsp;
+                                                        <i class="ace-icon fa fa-chevron-right blue bigger-110"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- /.timeline-items -->
+                        </div><!-- /.timeline-container -->
+
+                        <div class="timeline-container">
+                            <div class="timeline-label">
+                                        <span class="label label-grey arrowed-in-right label-lg">
+                                            <b>前天</b>
+                                        </span>
+                            </div>
+
+                            <div class="timeline-items">
+                                <div class="timeline-item clearfix">
+                                    <div class="timeline-info">
+                                        <i class="timeline-indicator ace-icon fa fa-leaf btn btn-primary no-hover green"></i>
+                                    </div>
+
+                                    <div class="widget-box transparent">
+                                        <div class="widget-header widget-header-small">
+                                            <h5 class="widget-title smaller">Lorum Ipsum</h5>
+
+                                            <span class="widget-toolbar no-border">
+																	<i class="ace-icon fa fa-clock-o bigger-110"></i>
+																	10:22
+																</span>
+
+                                            <span class="widget-toolbar">
+																	<a href="#" data-action="reload">
+																		<i class="ace-icon fa fa-refresh"></i>
+																	</a>
+
+																	<a href="#" data-action="collapse">
+																		<i class="ace-icon fa fa-chevron-up"></i>
+																	</a>
+																</span>
+                                        </div>
+
+                                        <div class="widget-body">
+                                            <div class="widget-main">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod
+                                                <span class="blue bolder">high life</span>
+                                                accusamus terry richardson ad squid &hellip;
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- /.timeline-items -->
+                        </div><!-- /.timeline-container -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            cache: true,
+            type: "GET",
+            url:'/prj/2017-12-01 00:00:00',
+            async: false,
+            error: function(request) {
+                alert("服务器错误，请稍后重试。");
+            },
+            success: function(data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#prjname").text(data[i].prjname);
+                    $("#assistant").text(" " + data[i].assistant);
+                    $("#etoc").text(" " + timeStamp2String(data[i].etoc));
+                    $("#leader").text(" " + data[i].leader);
+                    $("#mainwork").text(data[i].mainwork);
+                    $("#phase").text(data[i].phase);
+                    $("#requirement").text(data[i].requirement);
+                    $("#reviewer").text(" " + data[i].reviewer);
+                }
+            }
+        });
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/header :: head"></div>
+    <div th:replace="common/header :: aceadmin"></div>
+    <div th:replace="common/header :: acescripts"></div>
+    <div th:replace="common/header :: bootstraptable"></div>
+    <div th:replace="common/header :: jqueryui"></div>
+    <div th:replace="common/header :: datepicker"></div>
+
+    <!-- myjs -->
+    <script th:src="@{/custom/js/myjs.js}"></script>
+
+</head>
+<body>
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">项目管理</a>
+                <small>
+                    <i class="ace-icon fa fa-angle-double-right"></i>
+                </small>
+                <a href="inList">项目列表</a>
+            </li>
+        </ul><!-- /.breadcrumb -->
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="header smaller lighter green">项目列表</h3>
+                        <table id="projectTable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- 工具栏 -->
+<div id="toolbar">
+    <!--<div class="btn-group">-->
+    <button type="button" class="btn btn-success" id="add">
+        <i class="fa fa-plus">新增</i>
+    </button>
+
+    <!--</div>-->
+</div>
+
+<!-- 新增提示框 -->
+<div id="dialog-confirm" class="hide">
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form-horizontal" role="form">
+
+                <!-- 类别 -->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">类别</label>
+                    <div class="col-sm-9">
+                        <select name="category" class="form-control" id="form-field-1">
+                            <option selected="selected">工资</option>
+                            <option>奖励</option>
+                            <option>外快</option>
+                            <option>生活费</option>
+                            <option>吃饭</option>
+                            <option>请客</option>
+                            <option>房租</option>
+                            <option>其他</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="hr hr-16 hr-dotted"></div>
+
+                <!-- 时间选择器 -->
+                <!--<div class="form-group">-->
+                    <!--<label class="col-sm-3 control-label no-padding-right" for="id-date-picker-1">时间</label>-->
+                    <!--<div class="col-sm-8">-->
+                        <!--<div class="input-group">-->
+                            <!--<input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="yyyy-mm-dd" />-->
+                            <!--<span class="input-group-addon">-->
+                                <!--<i class="fa fa-calendar bigger-110"></i>-->
+                            <!--</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="hr hr-16 hr-dotted"></div>-->
+
+                <!-- 金额 -->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-2">金额</label>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="ace-icon fa fa-cny"></i>
+                            </span>
+                            <input class="form-control input-mask-phone" type="text" id="form-field-2" name="money"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="hr hr-16 hr-dotted"></div>
+
+                <!-- 涉及人 -->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-4">涉及人</label>
+                    <div class="col-sm-9">
+                        <select name="ecoName" class="form-control" id="form-field-4">
+                            <option selected="selected">LouieMain</option>
+                            <option>XTZ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="hr hr-16 hr-dotted"></div>
+
+                <!-- 状态 -->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-5">状态</label>
+                    <div class="col-sm-9">
+                        <select name="state" class="form-control" id="form-field-5">
+                            <option selected="selected" value="0">支出</option>
+                            <option value="1">收入</option>
+                            <option value="2">预支出</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="hr hr-16 hr-dotted"></div>
+
+                <!-- 备注 -->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-3">备注</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" id="form-field-3" placeholder="请输入备注" name="remark"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div><!-- #dialog-confirm -->
+
+<!-- 确认提示框 -->
+<div id="dialog-message" class="hide">
+    <p>
+        您确定要这样做吗？
+    </p>
+</div><!-- #dialog-message -->
+
+
+
+<script type="text/javascript">
+    $(function () {
+//        表格数据初始化
+        $('#projectTable').bootstrapTable({
+            url: '/prj/all',
+            method: 'get',
+            columns: [{
+                field: 'chk',
+                checkbox: true,
+                valign: 'middle',
+            }, {
+                field: 'number',
+                title: '序号',
+                formatter:function (value, row, index) {
+                    return index + 1;
+                },
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'prjname',
+                title: '项目名称',
+                valign: 'middle',
+            }, {
+                field: 'phase',
+                title: '阶段',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'mainwork',
+                title: '主要工作',
+                valign: 'middle',
+            }, {
+                field: 'requirement',
+                title: '具体要求',
+                valign: 'middle',
+            }, {
+                field: 'leader',
+                title: '负责人',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'assistant',
+                title: '协助人',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'reviewer',
+                title: '审核人',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'strtime',
+                title: '开始时间',
+                formatter: function (value, row, index) {
+                    return timeStamp2String(value);
+                },
+                valign: 'middle',
+                width: '8%',
+            }, {
+                field: 'etoc',
+                title: '预计完成时间',
+                formatter: function (value, row, index) {
+                    return timeStamp2String(value);
+                },
+                valign: 'middle',
+            }, {
+                field: 'endtime',
+                title: '实际完成时间',
+                formatter: function (value, row, index) {
+                    return timeStamp2String(value);
+                },
+                valign: 'middle',
+            }, {
+                field: 'state',
+                title: '状态',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    if (value == 1) {
+                        return "<span class='badge badge-success'>收入</span>";
+                    } else if (value == 0) {
+                        return "<span class='badge badge-danger'>支出</span>";
+                    }
+                    return "<span class='badge badge-purple'>预支出</span>";
+                },
+                valign: 'middle',
+            }, {
+                field: 'remark',
+                title: '备注',
+                valign: 'middle',
+                width: '10%',
+            },{
+                field: 'opr',
+                title: '操作',
+                align: 'center',
+                formatter: oprFunction,
+                valign: 'middle',
+            }],
+            striped: true,  // 隔行变色
+            pagination: true,   // 显示分页条
+            search: true,
+            showColumns: false,
+            showRefresh: true,
+            showToggle: true,
+            showPaginationSwitch: true,
+            clickToSelect: true,
+            toolbar: "#toolbar",
+        });
+    });
+
+    // 操作
+    function oprFunction(value, row, index) {
+        return '<div class="hidden-sm hidden-xs action-buttons">'+
+            '<a class="green" href="#" onclick="foo(\''+ row.prjid +'\')"><i class="ace-icon fa fa-pencil bigger-130"></i></a>' +
+            '<a class="red" href="#" id="delete" onclick="del(\''+ row.prjid +'\')"><i class="ace-icon fa fa-trash-o bigger-130"></i></a>' +
+            '</div>';
+    }
+
+//    删除
+    function del(id) {
+        var dialog = $( "#dialog-message" ).removeClass('hide').dialog({
+            modal: true,
+            title: "警告",
+            title_html: true,
+            buttons: [
+                {
+                    text: "取消",
+                    "class" : "btn btn-minier",
+                    click: function() {
+                        $( this ).dialog( "close" );
+                    }
+                },
+                {
+                    text: "确定",
+                    "class" : "btn btn-primary btn-minier",
+                    click: function() {
+                        $.ajax({
+                            cache: true,
+                            type: "DELETE",
+                            url:'/prj/del/' + id,
+                            async: false,
+                            error: function(request) {
+                                alert("服务器错误，请稍后重试。");
+                            },
+                            success: function(data) {
+                                alert("删除成功");
+                                window.location.href = "/prjList";
+                            }
+                        });
+                    }
+                }
+            ]
+        });
+    }
+
+    // 新增提示框
+    $( "#add" ).on('click', function(e) {
+        e.preventDefault();
+
+        $( "#dialog-confirm" ).removeClass('hide').dialog({
+            resizable: false,
+            width: '30%',
+            modal: true,
+            title: "新增收入",
+            title_html: true,
+            buttons: [
+                {
+                    html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; 确定",
+                    "class" : "btn btn-success btn-minier",
+                    click: function() {
+//                        提交表单数据
+                        $.ajax({
+                            cache: true,
+                            type: "POST",
+                            url:'/prj/addOne',
+                            data:{
+                                'category': $("select[name = 'category']").val(),
+                                'money': $("input[name = 'money']").val(),
+                                'ecoName': $("select[name = 'ecoName']").val(),
+                                'ecoTime': timeStamp2String(Date.parse(new Date())),
+                                'state': $("select[name = 'state']").val(),
+                                'remark': $("textarea[name = 'remark']").val(),
+                            },
+                            async: false,
+                            error: function(request) {
+                                alert("服务器错误，请稍后重试。");
+                            },
+                            success: function(data) {
+                                alert("添加成功");
+                                window.location.href = "/prjList";
+                            }
+                        });
+                    }
+                }
+                ,
+                {
+                    html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
+                    "class" : "btn btn-minier",
+                    click: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            ]
+        });
+    });
+
+    //datepicker plugin
+    //link
+    $('.date-picker').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        language: 'zh-CN',
+        todayHighlight: true
+    })
+    //show datepicker when clicking on the icon
+        .next().on(ace.click_event, function(){
+        $(this).prev().focus();
+    });
+
+    //or change it into a date range picker
+    $('.input-daterange').datepicker({autoclose:true});
+
+
+</script>
+
+</html>
