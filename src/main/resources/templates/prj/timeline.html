@@ -74,7 +74,7 @@
     $(function () {
         // 获取当前时间戳
         var currentTs = Date.parse(new Date());
-        $("#today").text("今天 " + timeStamp2String(currentTs));
+
         $.ajax({
             cache: true,
             type: "GET",
@@ -90,11 +90,16 @@
                 }
                 for (var i = 0; i < data.length; i++) {
                     var state = null, logo = null;
+                    var ing = Math.round((currentTs - data[i].strtime)/(1000*60*60*24));
+                    var ed = Math.round((currentTs - data[i].etoc)/(1000*60*60*24));
                     if (timeStamp2String(currentTs) == timeStamp2String(data[i].strtime)) {
-                        state = "<span class=\"badge badge-danger\">今天开始</span>";
+                        state = "<span class=\"badge badge-primary\">项目开始</span>";
                         logo = "<i class=\"timeline-indicator ace-icon fa fa-leaf btn btn-danger no-hover\"></i>";
+                    } else if (timeStamp2String(currentTs) > timeStamp2String(data[i].etoc)) {
+                        state = "<span class=\"badge badge-danger\">项目已延期 -" + ed + " 天</span>";
+                        logo = "<i class=\"timeline-indicator ace-icon fa fa-leaf btn btn-success no-hover\"></i>";
                     } else {
-                        state = "<span class=\"badge badge-success\">项目进行中</span>";
+                        state = "<span class=\"badge badge-success\">项目进行中 +" + ing + " 天</span>";
                         logo = "<i class=\"timeline-indicator ace-icon fa fa-leaf btn btn-success no-hover\"></i>";
                     }
                     $("#content").append(
@@ -111,6 +116,10 @@
                         '<small><i class="ace-icon fa fa-angle-double-right"></i></small>' +
                         '<span class="grey">' + data[i].mainwork + '</span>' +
                         '</h5>' +
+                        '<span class="widget-toolbar no-border">' +
+                        '<i class="ace-icon fa fa-clock-o bigger-110">&nbsp;</i>剩余 ' +
+                        (Math.round((data[i].etoc - currentTs)/(1000*60*60*24))) +
+                        ' 天</span>' +
                         '<span class="widget-toolbar"><a href="#" data-action="collapse"><i class="ace-icon fa fa-chevron-up"></i></a></span>' +
                         '</div>' +
                         '<div class="widget-body">' +
@@ -139,6 +148,7 @@
                         '</div>'
                     );
                 }
+                $("#today").text("今天 " + timeStamp2String(currentTs) + "（共 " + data.length + " 项目）");
             }
         });
     });
