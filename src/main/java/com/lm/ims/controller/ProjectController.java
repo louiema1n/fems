@@ -1,7 +1,7 @@
-package com.lm.fems.controller;
+package com.lm.ims.controller;
 
-import com.lm.fems.domain.Project;
-import com.lm.fems.service.ProjectService;
+import com.lm.ims.domain.Project;
+import com.lm.ims.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

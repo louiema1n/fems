@@ -1,7 +1,7 @@
-package com.lm.fems.service;
+package com.lm.ims.service;
 
-import com.lm.fems.domain.Project;
-import com.lm.fems.mapper.ProjectMapper;
+import com.lm.ims.domain.Project;
+import com.lm.ims.mapper.ProjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package com.lm.fems.mapper;
+package com.lm.ims.mapper;
 
-import com.lm.fems.domain.Project;
+import com.lm.ims.domain.Project;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Select;

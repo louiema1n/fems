@@ -1,4 +1,4 @@
-package com.lm.fems.domain;
+package com.lm.ims.domain;
 
 import java.sql.Timestamp;
 
