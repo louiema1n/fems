@@ -50,9 +50,9 @@ public class ProjectController {
      * @param strtime
      * @return
      */
-    @RequestMapping(value = "/{strtime}", method = RequestMethod.GET)
-    public List<Project> getByStrtime(@PathVariable Timestamp strtime) {
-        return this.projectService.getByStrtime(strtime);
+    @RequestMapping(value = "/{strtime}/{state}", method = RequestMethod.GET)
+    public List<Project> getByStrtime(@PathVariable Timestamp strtime, @PathVariable int state) {
+        return this.projectService.getByStrtime(strtime, state);
     }
 
     @RequestMapping(value = "/cpt", method = RequestMethod.POST)

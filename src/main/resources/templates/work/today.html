@@ -14,11 +14,11 @@
     <ul class="breadcrumb">
         <li>
             <i class="ace-icon fa fa-home home-icon"></i>
-            <a href="#">项目管理</a>
+            <a href="#">工作管理</a>
             <small>
                 <i class="ace-icon fa fa-angle-double-right"></i>
             </small>
-            <a href="inList">项目时间线</a>
+            <a href="inList" >今日事项</a>
         </li>
     </ul><!-- /.breadcrumb -->
 </div>
@@ -29,7 +29,16 @@
             <!-- PAGE CONTENT BEGINS -->
             <div class="row">
                 <div class="col-xs-12">
-                    <h3 class="header smaller lighter green">项目时间线</h3>
+                    <h3 class="row header smaller lighter blue">
+                        <span class="col-sm-6" id="today"> </span><!-- /.col -->
+                        <span class="col-sm-6">
+                            <label class="pull-right inline">
+                                <small class="muted smaller-90">是否完成:</small>
+                                <input id="id-button-done" type="checkbox" class="ace ace-switch ace-switch-5" />
+                                <span class="lbl middle"></span>
+                            </label>
+                        </span>
+                    </h3>
                 </div>
             </div>
             <div class="row">
@@ -39,7 +48,7 @@
                         <div class="timeline-container">
                             <div class="timeline-label">
                                 <span class="label label-primary arrowed-in-right label-lg">
-                                    <b id="today">今天</b>
+                                    <b id="items">今天</b>
                                 </span>
                             </div>
                             <div class="timeline-items" id="content">
@@ -72,85 +81,25 @@
 
 <script type="text/javascript">
     $(function () {
+
         // 获取当前时间戳
         var currentTs = Date.parse(new Date());
 
-        $.ajax({
-            cache: true,
-            type: "GET",
-            url:'/prj/' + timeStamp2String(currentTs) + ' 00:00:00',
-            async: false,
-            error: function(request) {
-                alert("服务器错误，请稍后重试。");
-            },
-            success: function(data) {
-                // data为空
-                if (data.length == 0) {
-                    $("#content").append("<h3 class=\"header smaller lighter\" style=\"text-align: center\">恭喜你！今日无事项。</h3>");
-                }
-                for (var i = 0; i < data.length; i++) {
-                    var state = null, logo = null;
-                    var ing = Math.round((currentTs - data[i].strtime)/(1000*60*60*24));
-                    var ed = Math.round((currentTs - data[i].etoc)/(1000*60*60*24));
-                    if (timeStamp2String(currentTs) == timeStamp2String(data[i].strtime)) {
-                        state = "<span class=\"badge badge-primary\">项目开始</span>";
-                        logo = "<i class=\"timeline-indicator ace-icon fa fa-leaf btn btn-danger no-hover\"></i>";
-                    } else if (timeStamp2String(currentTs) > timeStamp2String(data[i].etoc)) {
-                        state = "<span class=\"badge badge-danger\">项目已延期 -" + ed + " 天</span>";
-                        logo = "<i class=\"timeline-indicator ace-icon fa fa-leaf btn btn-success no-hover\"></i>";
-                    } else {
-                        state = "<span class=\"badge badge-success\">项目进行中 +" + ing + " 天</span>";
-                        logo = "<i class=\"timeline-indicator ace-icon fa fa-leaf btn btn-success no-hover\"></i>";
-                    }
-                    $("#content").append(
-                        '<div class="timeline-item clearfix">' +
-                        '<div class="timeline-info">' +
-                        logo +
-                        '</div>' +
-                        '<div class="widget-box transparent">' +
-                        '<div class="widget-header widget-header-small">' +
-                        '<h5 class="widget-title smaller">' +
-                        '<span class="blue">' + data[i].prjname + '</span>' +
-                        '<small><i class="ace-icon fa fa-angle-double-right"></i></small>' +
-                        '<span class="pink">' + data[i].phase + '</span>' +
-                        '<small><i class="ace-icon fa fa-angle-double-right"></i></small>' +
-                        '<span class="grey">' + data[i].mainwork + '</span>' +
-                        '</h5>' +
-                        '<span class="widget-toolbar no-border">' +
-                        '<i class="ace-icon fa fa-clock-o bigger-110">&nbsp;</i>剩余 ' +
-                        (Math.round((data[i].etoc - currentTs)/(1000*60*60*24))) +
-                        ' 天</span>' +
-                        '<span class="widget-toolbar"><a href="#" data-action="collapse"><i class="ace-icon fa fa-chevron-up"></i></a></span>' +
-                        '</div>' +
-                        '<div class="widget-body">' +
-                        '<div class="widget-main">' +
-                        '<span class="bigger-120" id="requirement">' + data[i].requirement + '</span>' +
-                        '<div class="pull-right action-buttons">' +
-                        state +
-                        '<a href="javascript:void(0);" title="确认完成项目" onclick="cfm('+data[i].prjid+')">' +
-                        '<i class="timeline-indicator ace-icon fa fa-check btn btn-primary" style="cursor: pointer"></i>' +
-                        '</a>' +
-                        '</div>' +
-                        '<div class="space-6"></div>' +
-                        '<div class="widget-toolbox clearfix">' +
-                        '<div class="pull-left">' +
-                        '<i class="ace-icon fa fa-user red bigger-30" >&nbsp;' + data[i].leader + '</i>&nbsp;&nbsp;' +
-                        '<i class="ace-icon fa fa-users pink bigger-20">&nbsp;' + data[i].assistant + '</i>&nbsp;&nbsp;' +
-                        '<i class="ace-icon fa fa-street-view green bigger-20" >&nbsp;' + data[i].reviewer + '</i>' +
-                        '</div>' +
-                        '<div class="pull-right action-buttons">' +
-                        '<i class="ace-icon fa fa-clock-o grey bigger-20" >&nbsp;' + timeStamp2String(data[i].strtime) + " 至 " + timeStamp2String(data[i].etoc) + '</i>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>'
-                    );
-                }
-                $("#today").text("今天 " + timeStamp2String(currentTs) + "（共 " + data.length + " 项目）");
-            }
+        var url = '/prj/' + timeStamp2String(currentTs) + ' 00:00:00';
+        initData(currentTs, url + '/0');
+
+        // 是否显示完成事项
+        var flag = 1;
+        $('#id-button-done').on('click', function(){
+            $("#content").text('');
+            url = '/prj/' + timeStamp2String(currentTs) + ' 00:00:00/' + flag;
+            initData(currentTs, url);
+            if (flag == 0) {
+                flag = 1;
+            } else
+                flag = 0;
         });
+
     });
 
     // 确认完成项目提示框
@@ -176,6 +125,7 @@
                                 'prjid': prjid,
                                 'endtime': timeStamp2String(Date.parse(new Date())) + " 00:00:00",
                                 'remark': $("textarea[name = 'remark']").val(),
+                                'state': 1,
                             },
                             async: false,
                             error: function(request) {
@@ -183,7 +133,7 @@
                             },
                             success: function(data) {
                                 alert("确认成功");
-                                window.location.href = "/timeline";
+                                window.location.href = "/today";
                             }
                         });
                     }
@@ -200,7 +150,92 @@
         });
     };
 
-
+    // 页面数据初始化
+    function initData(currentTs, url) {
+        $.ajax({
+            cache: true,
+            type: "GET",
+            url: url,
+            async: false,
+            error: function(request) {
+                alert("服务器错误，请稍后重试。");
+            },
+            success: function(data) {
+                // data为空
+                if (data.length == 0) {
+                    $("#content").append("<h3 class=\"header smaller lighter\" style=\"text-align: center\">恭喜你！今日无事项。</h3>");
+                }
+                for (var i = 0; i < data.length; i++) {
+                    var state = null, logo = null;
+                    var ing = Math.round((currentTs - data[i].strtime)/(1000*60*60*24));
+                    var ed = Math.round((currentTs - data[i].etoc)/(1000*60*60*24));
+                    var cpt = '<a href="javascript:void(0);" title="确认完成项目" onclick="cfm('+data[i].prjid+')">' +
+                        '<i class="timeline-indicator ace-icon fa fa-check btn btn-primary" style="cursor: pointer"></i>' +
+                        '</a>';
+                    var days = '<span class="widget-toolbar no-border">' +
+                        '<i class="ace-icon fa fa-clock-o bigger-110">&nbsp;</i>剩余 ' +
+                        (Math.round((data[i].etoc - currentTs)/(1000*60*60*24))) +
+                        ' 天</span>';
+                    if (data[i].state == 1) {
+                        state = "<span class=\"badge badge-blue\">项目已完成</span>";
+                        logo = "<i class=\"timeline-indicator ace-icon fa fa-leaf btn btn-blue no-hover\"></i>";
+                        cpt = "";
+                        days = "";
+                    } else if (timeStamp2String(currentTs) == timeStamp2String(data[i].strtime)) {
+                        state = "<span class=\"badge badge-primary\">项目开始</span>";
+                        logo = "<i class=\"timeline-indicator ace-icon fa fa-leaf btn btn-danger no-hover\"></i>";
+                    } else if (timeStamp2String(currentTs) > timeStamp2String(data[i].etoc)) {
+                        state = "<span class=\"badge badge-danger\">项目已延期 -" + ed + " 天</span>";
+                        logo = "<i class=\"timeline-indicator ace-icon fa fa-leaf btn btn-success no-hover\"></i>";
+                    } else {
+                        state = "<span class=\"badge badge-success\">项目进行中 +" + ing + " 天</span>";
+                        logo = "<i class=\"timeline-indicator ace-icon fa fa-leaf btn btn-success no-hover\"></i>";
+                    }
+                    $("#content").append(
+                        '<div class="timeline-item clearfix">' +
+                        '<div class="timeline-info">' +
+                        logo +
+                        '</div>' +
+                        '<div class="widget-box transparent">' +
+                        '<div class="widget-header widget-header-small">' +
+                        '<h5 class="widget-title smaller">' +
+                        '<span class="blue">' + data[i].prjname + '</span>' +
+                        '<small><i class="ace-icon fa fa-angle-double-right"></i></small>' +
+                        '<span class="pink">' + data[i].phase + '</span>' +
+                        '<small><i class="ace-icon fa fa-angle-double-right"></i></small>' +
+                        '<span class="grey">' + data[i].mainwork + '</span>' +
+                        '</h5>' + days +
+                        '<span class="widget-toolbar"><a href="#" data-action="collapse"><i class="ace-icon fa fa-chevron-up"></i></a></span>' +
+                        '</div>' +
+                        '<div class="widget-body">' +
+                        '<div class="widget-main">' +
+                        '<span class="bigger-120" id="requirement">' + data[i].requirement + '</span>' +
+                        '<div class="pull-right action-buttons">' +
+                        state + cpt +
+                        '</div>' +
+                        '<div class="space-6"></div>' +
+                        '<div class="widget-toolbox clearfix">' +
+                        '<div class="pull-left">' +
+                        '<i class="ace-icon fa fa-user red bigger-30" >&nbsp;' + data[i].leader + '</i>&nbsp;&nbsp;' +
+                        '<i class="ace-icon fa fa-users pink bigger-20">&nbsp;' + data[i].assistant + '</i>&nbsp;&nbsp;' +
+                        '<i class="ace-icon fa fa-street-view green bigger-20" >&nbsp;' + data[i].reviewer + '</i>' +
+                        '</div>' +
+                        '<div class="pull-right action-buttons">' +
+                        '<i class="ace-icon fa fa-clock-o grey bigger-20" >&nbsp;' + timeStamp2String(data[i].strtime) + " 至 " + timeStamp2String(data[i].etoc) + '</i>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>'
+                    );
+                }
+                $("#today").text("今日(" + timeStamp2String(currentTs) + ")事项");
+                $("#items").text("共 " + data.length + " 项目");
+            }
+        });
+    }
+    
 </script>
 
 </body>

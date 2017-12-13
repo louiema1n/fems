@@ -28,14 +28,14 @@ public class IndexController {
         return "eco/ecoList";
     }
 
-    @RequestMapping("/prjList")
+    @RequestMapping("/project")
     public String prjList() {
-        return "prj/prjList";
+        return "work/project";
     }
 
-    @RequestMapping("/timeline")
+    @RequestMapping("/today")
     public String timeline() {
-        return "prj/timeline";
+        return "work/today";
     }
 
     @RequestMapping("/test")

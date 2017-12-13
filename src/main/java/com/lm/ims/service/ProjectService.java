@@ -47,8 +47,8 @@ public class ProjectService {
      * @param strtime
      * @return
      */
-    public List<Project> getByStrtime(Timestamp strtime) {
-        return this.projectMapper.selectByStrtime(strtime);
+    public List<Project> getByStrtime(Timestamp strtime, int state) {
+        return this.projectMapper.selectByStrtime(strtime, state);
     }
 
     /**

@@ -1,10 +1,7 @@
 package com.lm.ims.mapper;
 
 import com.lm.ims.domain.Project;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.annotations.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -23,8 +20,8 @@ public interface ProjectMapper {
     @Delete("delete from project where prjid = #{prjid}")
     Integer delById(int prjid);
 
-    @Select("select * from project where endtime is null and strtime <= #{strtime}")
-    List<Project> selectByStrtime(Timestamp strtime);
+    @Select("select * from project where strtime <= #{strtime} and state = #{state}")
+    List<Project> selectByStrtime(@Param("strtime") Timestamp strtime, @Param("state") int state);
 
     @UpdateProvider(type = ProjectDaoProvider.class, method = "updById")
     Integer upd(Project project);
